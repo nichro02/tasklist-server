@@ -11,6 +11,16 @@ app.use(express.json())
 
 //ROUTES
 //create todo
+app.post('/todos', async(req, res)=>{
+    try {
+        const { description } = req.body
+        const newTodo = await pool.query('INSERT INTO todo (description) VALUES($1)', [description])
+
+        res.json(newTodo)
+    } catch (error) {
+        console.log(error.message)
+    }
+})
 
 //get all todos
 
