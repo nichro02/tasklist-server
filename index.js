@@ -18,11 +18,19 @@ app.post('/todos', async(req, res)=>{
 
         res.json(newTodo.rows[0])
     } catch (error) {
-        console.log(error.message)
+        console.error(error.message)
     }
 })
 
 //get all todos
+app.get('/todos', async(req, res) => {
+    try {
+       const allTodos = await pool.query('SELECT * FROM todo')
+       res.json(allTodos.rows)
+    } catch (error) {
+        console.error(error.message)
+    }
+})
 
 app.listen(5000, () => {
     console.log('listening on port 5000')
