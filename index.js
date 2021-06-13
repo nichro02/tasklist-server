@@ -15,7 +15,8 @@ app.post('/todos', async(req, res)=>{
     try {
         const { description } = req.body
         const newTodo = await pool.query('INSERT INTO todo (description) VALUES($1) RETURNING *', [description])
-
+        //[description] maps to $1
+         
         res.json(newTodo.rows[0])
     } catch (error) {
         console.error(error.message)
@@ -50,7 +51,7 @@ app.put('/todos/:id', async(req, res) => {
         const {id} = req.params
         const {description} = req.body
         const updateTodo = await pool.query('UPDATE todo SET description = $1 WHERE todo_id = $2', [description, id])
-
+        //use SET to define which column of table to update
         res.json('todo was updated')
     } catch (error) {
         console.log(error.message)
